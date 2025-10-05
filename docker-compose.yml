@@ -9,7 +9,7 @@ services:
       # Mount a directory for the database to ensure it persists correctly
       - ./server/database:/usr/src/app/database
     restart: unless-stopped
-    container_name: pol_designer_backend
+    container_name: noorao_gpon_designer_backend
 
   frontend:
     build:
@@ -20,4 +20,4 @@ services:
     depends_on:
       - backend
     restart: unless-stopped
-    container_name: pol_designer_frontend
+    container_name: noorao_gpon_designer_frontend

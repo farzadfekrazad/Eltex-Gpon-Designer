@@ -1,5 +1,5 @@
 {
-  "name": "POL Network Designer (GPON)",
-  "description": "A comprehensive tool for designing and visualizing Passive Optical LAN (POL) networks. Configure all possible parameters from OLT to ONT and view the dynamic network diagram with real-time power budget analysis.",
+  "name": "Noorao Gpon Net Designer",
+  "description": "A comprehensive tool for designing and visualizing GPON networks. Configure all possible parameters from OLT to ONT and view the dynamic network diagram with real-time power budget analysis.",
   "requestFramePermissions": []
 }

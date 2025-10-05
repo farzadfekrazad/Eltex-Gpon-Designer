@@ -1,11 +1,12 @@
 
 {
-  "name": "pol-designer-server",
-  "version": "1.0.0",
-  "description": "Backend server for the POL Designer application",
+  "name": "noorao-gpon-net-designer-server",
+  "version": "0.1.0",
+  "description": "Backend server for the Noorao Gpon Net Designer application",
+  "type": "module",
   "main": "dist/index.js",
   "scripts": {
-    "build": "tsc",
+    "build": "node --max-old-space-size=2048 node_modules/typescript/bin/tsc",
     "start": "node dist/index.js",
     "dev": "ts-node-dev --respawn --transpile-only src/index.ts"
   },

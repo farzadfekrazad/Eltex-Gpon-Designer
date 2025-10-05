@@ -2,7 +2,7 @@ import knex, { Knex } from 'knex';
 import path from 'path';
 import bcrypt from 'bcryptjs';
 import fs from 'fs';
-import { initialOltDevices, initialOntDevices } from './data/initialData';
+import { initialOltDevices, initialOntDevices } from './data/initialData.js';
 import { fileURLToPath } from 'url';
 
 // This path resolves to a 'database' directory inside the container, which is mounted as a volume.
@@ -18,7 +18,7 @@ if (!fs.existsSync(dbDirectory)) {
   fs.mkdirSync(dbDirectory, { recursive: true });
 }
 
-const dbPath = path.resolve(dbDirectory, 'pol_designer.db');
+const dbPath = path.resolve(dbDirectory, 'noorao_gpon_designer.db');
 
 export const db: Knex = knex({
   client: 'sqlite3',
@@ -44,7 +44,7 @@ export async function initializeDatabase() {
     const adminPasswordHash = await bcrypt.hash('admin123', 10);
     await db('users').insert({
       id: '00000000-0000-0000-0000-000000000001',
-      email: 'admin@pol.designer',
+      email: 'admin@noorao.designer',
       passwordHash: adminPasswordHash,
       role: 'admin',
       verified: true,

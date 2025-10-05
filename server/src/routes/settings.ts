@@ -1,9 +1,9 @@
 
 import { Router } from 'express';
-import { db } from '../db';
-import { SmtpConfig } from '../types';
-import { adminOnly } from '../authMiddleware';
-import faDefaults from '../i18n/locales/fa';
+import { db } from '../db.js';
+import { SmtpConfig } from '../types.js';
+import { adminOnly } from '../authMiddleware.js';
+import faDefaults from '../i18n/locales/fa.js';
 
 const router = Router();
 

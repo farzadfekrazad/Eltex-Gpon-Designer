@@ -2,13 +2,13 @@ import express from 'express';
 import cors from 'cors';
 // FIX: Import the 'process' module to provide type definitions for 'process.exit'.
 import process from 'process';
-import { initializeDatabase } from './db';
+import { initializeDatabase } from './db.js';
 
-import authRoutes from './routes/auth';
-import deviceRoutes from './routes/devices';
-import userRoutes from './routes/users';
-import settingsRoutes from './routes/settings';
-import { authMiddleware, adminOnly } from './authMiddleware';
+import authRoutes from './routes/auth.js';
+import deviceRoutes from './routes/devices.js';
+import userRoutes from './routes/users.js';
+import settingsRoutes from './routes/settings.js';
+import { authMiddleware, adminOnly } from './authMiddleware.js';
 
 const app = express();
 const port = 3001;
