@@ -6,6 +6,7 @@ import ImportExport from './ImportExport';
 import UserManagement from './UserManagement';
 import TranslationEditor from './TranslationEditor';
 import SmtpSettings from './SmtpSettings';
+import DatabaseManagement from './DatabaseManagement';
 import { useI18n } from '../contexts/I18nContext';
 
 interface AdminPanelProps {
@@ -183,7 +184,10 @@ const AdminPanel: React.FC<AdminPanelProps> = ({ currentUser, oltDevices, ontDev
       )}
 
       {activeTab === 'settings' && currentUser.role === 'admin' && (
-          <SmtpSettings />
+          <div className="space-y-6">
+            <SmtpSettings />
+            <DatabaseManagement />
+          </div>
       )}
 
       {modalOpen && (

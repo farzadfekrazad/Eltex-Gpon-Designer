@@ -1,16 +1,19 @@
 import knex, { Knex } from 'knex';
 import path from 'path';
+// FIX: Import fileURLToPath from url to correctly resolve the path in an ES module environment.
+import { fileURLToPath } from 'url';
 import bcrypt from 'bcryptjs';
 import fs from 'fs';
-import { initialOltDevices, initialOntDevices } from './data/initialData.js';
-import { fileURLToPath } from 'url';
+import { initialOltDevices, initialOntDevices } from './data/initialData';
+
+// FIX: Define __dirname for ES modules, as it's not available by default like in CommonJS.
+// This resolves the "Cannot find name '__dirname'" error.
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 // This path resolves to a 'database' directory inside the container, which is mounted as a volume.
 // For CommonJS modules, __dirname is a global variable pointing to the directory of the current script.
 // In our built server, the script will be in /usr/src/app/dist, so we go up one level.
-// FIX: __dirname is not available in ES modules by default. Recreate it using import.meta.url.
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
 const dbDirectory = path.resolve(__dirname, '../database');
 
 // Ensure the database directory exists within the container before trying to connect
@@ -18,7 +21,7 @@ if (!fs.existsSync(dbDirectory)) {
   fs.mkdirSync(dbDirectory, { recursive: true });
 }
 
-const dbPath = path.resolve(dbDirectory, 'noorao_gpon_designer.db');
+export const dbPath = path.resolve(dbDirectory, 'pol_designer.db');
 
 export const db: Knex = knex({
   client: 'sqlite3',
@@ -27,6 +30,17 @@ export const db: Knex = knex({
   },
   useNullAsDefault: true,
 });
+
+const tables = ['users', 'verification_codes', 'olts', 'onts', 'settings'];
+
+export async function resetDatabase() {
+  console.log('Resetting database...');
+  for (const table of tables) {
+    await db.schema.dropTableIfExists(table);
+  }
+  console.log('All tables dropped.');
+  await initializeDatabase();
+}
 
 export async function initializeDatabase() {
   // Users table
@@ -44,7 +58,7 @@ export async function initializeDatabase() {
     const adminPasswordHash = await bcrypt.hash('admin123', 10);
     await db('users').insert({
       id: '00000000-0000-0000-0000-000000000001',
-      email: 'admin@noorao.designer',
+      email: 'admin@pol.designer',
       passwordHash: adminPasswordHash,
       role: 'admin',
       verified: true,

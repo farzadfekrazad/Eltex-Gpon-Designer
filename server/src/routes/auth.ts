@@ -3,8 +3,8 @@ import { Router } from 'express';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import { randomUUID } from 'crypto';
-import { db } from '../db.js';
-import { User } from '../types.js';
+import { db } from '../db';
+import { User } from '../types';
 
 const router = Router();
 const JWT_SECRET = process.env.JWT_SECRET || 'your-super-secret-key';

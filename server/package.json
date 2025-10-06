@@ -1,9 +1,8 @@
 
 {
-  "name": "noorao-gpon-net-designer-server",
-  "version": "0.1.0",
-  "description": "Backend server for the Noorao Gpon Net Designer application",
-  "type": "module",
+  "name": "pol-designer-server",
+  "version": "1.0.0",
+  "description": "Backend server for the POL Designer application",
   "main": "dist/index.js",
   "scripts": {
     "build": "tsc",

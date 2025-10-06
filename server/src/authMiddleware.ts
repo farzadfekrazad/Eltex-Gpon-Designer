@@ -1,10 +1,10 @@
 import { Request, Response, NextFunction } from 'express';
 import jwt from 'jsonwebtoken';
-import { User } from './types.js';
+import { User } from './types';
 
 const JWT_SECRET = process.env.JWT_SECRET || 'your-super-secret-key';
 
-// FIX: Define AuthenticatedRequest as an interface that extends the base Express Request type.
+// FIX: Changed AuthenticatedRequest from a type alias to an interface that extends the base Express Request type.
 // This ensures that all properties of Request (like headers, body, params) are available,
 // while also adding the custom 'user' property. This resolves type errors in this file and in route handlers.
 export interface AuthenticatedRequest extends Request {

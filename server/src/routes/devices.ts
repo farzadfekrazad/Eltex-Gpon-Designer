@@ -1,9 +1,9 @@
 
 import { Router } from 'express';
-import { db } from '../db.js';
-import { OltDevice, OntDevice } from '../types.js';
+import { db } from '../db';
+import { OltDevice, OntDevice } from '../types';
 import { randomUUID } from 'crypto';
-import { AuthenticatedRequest, adminOnly } from '../authMiddleware.js';
+import { AuthenticatedRequest, adminOnly } from '../authMiddleware';
 
 const router = Router();
 

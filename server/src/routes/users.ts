@@ -2,9 +2,9 @@
 import { Router } from 'express';
 import bcrypt from 'bcryptjs';
 import { randomUUID } from 'crypto';
-import { db } from '../db.js';
-import { User, UserRole } from '../types.js';
-import { adminOnly } from '../authMiddleware.js';
+import { db } from '../db';
+import { User, UserRole } from '../types';
+import { adminOnly } from '../authMiddleware';
 
 const router = Router();
 
@@ -54,7 +54,7 @@ router.put('/:id/role', async (req, res) => {
         return res.status(404).json({ messageKey: 'auth.error.userNotFound' });
     }
     // Prevent self-demotion or changing the main admin
-    if (user.email === 'admin@noorao.designer') {
+    if (user.email === 'admin@pol.designer') {
         return res.status(403).json({ message: 'Cannot change role of default admin' });
     }
 

@@ -1,9 +1,10 @@
 
 import { Router } from 'express';
-import { db } from '../db.js';
-import { SmtpConfig } from '../types.js';
-import { adminOnly } from '../authMiddleware.js';
-import faDefaults from '../i18n/locales/fa.js';
+import { db, dbPath, resetDatabase } from '../db';
+import { SmtpConfig } from '../types';
+import { adminOnly } from '../authMiddleware';
+import faDefaults from '../i18n/locales/fa';
+import fs from 'fs';
 
 const router = Router();
 
@@ -65,6 +66,32 @@ router.post('/translations/fa', async (req, res) => {
 router.delete('/translations/fa', async (req, res) => {
     await db('settings').where({ key: 'customTranslations_fa' }).del();
     res.status(204).send();
+});
+
+// Database Management
+router.get('/db-status', (req, res) => {
+    res.json({ type: 'SQLite', status: 'Connected' });
+});
+
+router.post('/db-backup', (req, res) => {
+    if (!fs.existsSync(dbPath)) {
+        return res.status(404).json({ message: 'Database file not found.' });
+    }
+    res.download(dbPath, `pol_designer_backup.db`, (err) => {
+        if (err) {
+            console.error("Error sending backup file:", err);
+        }
+    });
+});
+
+router.post('/db-reset', async (req, res) => {
+    try {
+        await resetDatabase();
+        res.status(200).json({ message: 'Database reset successfully' });
+    } catch (error) {
+        console.error('Failed to reset database:', error);
+        res.status(500).json({ message: 'Database reset failed' });
+    }
 });
 
 

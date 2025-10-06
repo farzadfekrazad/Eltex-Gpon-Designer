@@ -1,6 +1,6 @@
-# Noorao Gpon Net Designer
+# Passive Optical LAN (POL) Network Designer
 
-This is a comprehensive tool for designing and visualizing GPON networks. It allows you to configure all possible parameters from the Optical Line Terminal (OLT) to the Optical Network Terminal (ONT) and view a dynamic network diagram with real-time power budget analysis.
+This is a comprehensive tool for designing and visualizing Passive Optical LAN (POL) networks. It allows you to configure all possible parameters from the Optical Line Terminal (OLT) to the Optical Network Terminal (ONT) and view a dynamic network diagram with real-time power budget analysis.
 
 The application features a React-based frontend and a Node.js/Express backend, all containerized with Docker for easy setup and deployment.
 
@@ -58,7 +58,7 @@ This is the easiest and most reliable way to get the application running on your
 
 A default administrator account is created when the database is first initialized. Use these credentials to log in and access the Admin Panel:
 
--   **Email**: `admin@noorao.designer`
+-   **Email**: `admin@pol.designer`
 -   **Password**: `admin123`
 
 ### Managing the Application
@@ -75,22 +75,6 @@ A default administrator account is created when the database is first initialize
     docker-compose up
     ```
 
-### Development Workflow
-
-- Rebuild and restart containers after code changes:
-  ```bash
-  docker compose up --build
-  ```
-- Watch logs to verify startup and diagnose issues:
-  ```bash
-  docker compose logs -f
-  ```
-- Common ports:
-  - Frontend UI: `http://localhost:5173`
-  - Backend API: `http://localhost:3001`
-
-If the backend shows module resolution errors at runtime, ensure backend imports use explicit `.js` extensions for local modules (e.g., `import { db } from '../db.js'`).
-
 ### How It Works
 
 The `docker-compose.yml` file defines and orchestrates two services:
@@ -98,7 +82,7 @@ The `docker-compose.yml` file defines and orchestrates two services:
 1.  **`backend`**:
     -   Builds the Node.js/Express server from `server/Dockerfile`.
     -   Installs all dependencies, compiles the TypeScript code, and starts the server.
-    -   Creates and uses a SQLite database file (`noorao_gpon_designer.db`) which is stored inside the `server` directory on your host machine, so your data persists even if you stop and remove the containers.
+    -   Creates and uses a SQLite database file (`pol_designer.db`) which is stored inside the `server` directory on your host machine, so your data persists even if you stop and remove the containers.
 
 2.  **`frontend`**:
     -   Builds the React frontend application from the root `Dockerfile`.
@@ -109,32 +93,3 @@ The `docker-compose.yml` file defines and orchestrates two services:
 ---
 
 This setup ensures that you have a consistent development and production environment without needing to manually install Node.js, dependencies, or configure a web server on your host machine.
-
-**Deploy to Google AI Studio App Builder**
-- Overview: Import this GitHub repo and deploy the frontend, with the backend deployed separately (recommended) or via container.
-- Prereqs: Ensure main is up to date and .gitignore excludes server/database/*.db.
-
-- Frontend (recommended, static hosting):
-  - Import from GitHub and select this repository.
-  - Build command: 
-pm ci && npm run build.
-  - Start command (Node serve): 
-px serve -s dist -l 8080.
-  - Static hosting alternative: Use the provided Dockerfile + 
-ginx.conf to serve dist/.
-  - API calls: The dev proxy in ite.config.ts is only for local dev. In production, point /api to your backend service URL. If using Nginx, update 
-ginx.conf proxy_pass target to your backend URL.
-
-- Backend (separate service):
-  - Build and deploy the backend using server/Dockerfile to a runtime like Cloud Run.
-  - Expose http on port 3001.
-  - Set environment variables as needed (e.g., SMTP); database file resides inside the container.
-
-- Docker Compose (alternative, single host):
-  - If the platform supports Docker Compose, use docker compose up --build.
-  - Frontend publishes 5173 (Nginx), backend publishes 3001.
-
-- Verify:
-  - Frontend: Access the App URL and confirm UI loads.
-  - Backend: Test GET /api/settings and POST /api/auth/login.
-  - CORS: If the frontend is hosted on a different origin, enable CORS on the backend or proxy /api via Nginx.
