@@ -23,4 +23,5 @@ server/database/*.sqlite
 server/database/*.sqlite3
 
 # Docker artifacts
-.docker/
+.docker/\n# Ignore exported Docker images\nexported_images/*.tar\n
+\n# Ignore exported Docker images\nexported_images/*.tar\n
